@@ -221,9 +221,11 @@ fun HomeScreen(modifier: Modifier){
     Column(modifier.verticalScroll(rememberScrollState())) {
         Spacer(modifier = Modifier.padding(16.dp))
         SearchBar(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
         HomeSection(title = R.string.home_section_title, modifier = Modifier.padding()){
             ScrollableRow(modifier = Modifier.padding())
         }
+        Spacer(modifier = Modifier.padding(25.dp))
         HomeSection(R.string.home_section_fave,Modifier.padding()){
             FavoriteCollectionGrid(modifier = Modifier.padding())
         }
