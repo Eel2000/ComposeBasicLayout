@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ComposeBasicLayout</string>
+    <string name="placeholder_search">Search</string>
+    <string name="card_text">Hey,card</string>
+</resources>
