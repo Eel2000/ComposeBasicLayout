@@ -3,6 +3,8 @@ package com.example.composebasiclayout
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -65,13 +67,17 @@ fun SearchBar(modifier: Modifier){
 
 //Card
 @Composable
-fun Card(modifier: Modifier){
+fun Card(
+    @DrawableRes icon: Int,
+    @StringRes text: Int,
+    modifier: Modifier
+){
     Column(
         horizontalAlignment= Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         Image(
-            painterResource(id = R.drawable.model9),
+            painterResource(id = icon),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -79,7 +85,7 @@ fun Card(modifier: Modifier){
                 .clip(CircleShape)
         )
         Text(
-            stringResource(id = R.string.card_text),
+            stringResource(id = text),
             style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .paddingFromBaseline(top = 24.dp, bottom = 8.dp)
@@ -87,7 +93,7 @@ fun Card(modifier: Modifier){
     }
 }
 
-//Previews scopes
+//Previews scope
 
 @Preview(showBackground = true)
 @Composable
@@ -101,6 +107,10 @@ fun SearchBarPreview(){
 @Composable
 fun CardPreview(){
     ComposeBasicLayoutTheme {
-        Card(modifier = Modifier.padding(8.dp))
+        Card(
+            R.drawable.model9,
+            R.string.card_text,
+            modifier = Modifier.padding(8.dp)
+        )
     }
 }
