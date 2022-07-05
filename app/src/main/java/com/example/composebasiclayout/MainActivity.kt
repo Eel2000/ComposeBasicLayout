@@ -7,8 +7,10 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -24,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composebasiclayout.ui.theme.ComposeBasicLayoutTheme
+import java.util.*
 
 
 class MainActivity : ComponentActivity() {
@@ -175,9 +178,40 @@ fun ScrollableRow(
 fun FavoriteCollectionGrid(
     modifier: Modifier
 ){
-    //LazyHorizontalGrid
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        contentPadding = PaddingValues(horizontal =  16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.height(150.dp)
+    ){
+        items(favoriteCollection){item ->
+            FavoriteCollectionCard(
+                item.icon,
+                item.text,
+                modifier
+            )
+        }
+    }
 }
 
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier,
+    content: @Composable () -> Unit
+){
+    Column(modifier) {
+        Text(
+            stringResource(id = title).uppercase(locale = Locale.getDefault()),
+            style = MaterialTheme.typography.h5,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
+}
 
 //Previews scope
 @Preview(showBackground = true)
@@ -225,5 +259,15 @@ fun ScrollableRowPreview(){
 fun FavoriteCollectionGridPreview(){
     ComposeBasicLayoutTheme {
         FavoriteCollectionGrid(Modifier.padding(8.dp))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun HomeSection(){
+    ComposeBasicLayoutTheme {
+        HomeSection(title = R.string.home_section_title, Modifier.padding()){
+            ScrollableRow(Modifier.padding(8.dp))
+        }
     }
 }
