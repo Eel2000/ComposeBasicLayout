@@ -2,4 +2,11 @@
     <string name="app_name">ComposeBasicLayout</string>
     <string name="placeholder_search">Search</string>
     <string name="card_text">Hey,card</string>
+    <string name="card_collection">Workout</string>
+    <string name="photo_shoot">Photo shoot</string>
+    <string name="walking">Walking</string>
+    <string name="move_on">Move on</string>
+    <string name="breathing">Breathing</string>
+    <string name="ow_yeah">Ow yeah</string>
+    <string name="cool">Cool</string>
 </resources>

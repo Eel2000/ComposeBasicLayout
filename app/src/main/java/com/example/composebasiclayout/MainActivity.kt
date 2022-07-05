@@ -7,6 +7,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composebasiclayout.ui.theme.ComposeBasicLayoutTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,32 @@ fun MainApplication(){
         //call composable here
     }
 }
+
+//Hard coded data
+private  val itemsData = listOf(
+    R.drawable.model10 to R.string.card_collection,
+    R.drawable.men9 to R.string.photo_shoot,
+    R.drawable.model5 to R.string.walking,
+    R.drawable.men8 to R.string.move_on,
+    R.drawable.model4 to R.string.breathing,
+    R.drawable.model7 to R.string.ow_yeah,
+    R.drawable.men7 to R.string.cool,
+).map { DrawableStringPair(it.first,it.second) }
+
+private val favoriteCollection = listOf(
+    R.drawable.model1 to R.string.card_collection,
+    R.drawable.men3 to R.string.photo_shoot,
+    R.drawable.model2 to R.string.walking,
+    R.drawable.men2 to R.string.move_on,
+    R.drawable.model6 to R.string.breathing,
+    R.drawable.simple to R.string.ow_yeah,
+    R.drawable.wo to R.string.cool,
+).map { DrawableStringPair(it.first, it.second) }
+
+private data class DrawableStringPair(
+    @DrawableRes val icon: Int,
+    @StringRes val text: Int)
+
 
 //SearchBar
 @Composable
@@ -93,8 +123,63 @@ fun Card(
     }
 }
 
-//Previews scope
+@Composable
+fun FavoriteCollectionCard(
+    @DrawableRes  icon: Int,
+    @StringRes text: Int,
+    modifier: Modifier
+){
+    Surface(
+        shape = MaterialTheme.shapes.small,
+        modifier = modifier
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.width(192.dp)
+        ){
+                Image(
+                    painterResource(id = icon),
+                    contentDescription = null,
+                     contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(56.dp)
+                )
+            Text(
+                stringResource(id = text),
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+    }
+}
 
+@Composable
+fun ScrollableRow(
+    modifier: Modifier
+){
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),//space around the whole content
+        modifier = modifier
+    ){
+        items(itemsData){item ->
+            Card(
+                icon = item.icon,
+                text = item.text,
+                modifier = modifier
+            )
+        }
+    }
+}
+
+@Composable
+fun FavoriteCollectionGrid(
+    modifier: Modifier
+){
+    //LazyHorizontalGrid
+}
+
+
+//Previews scope
 @Preview(showBackground = true)
 @Composable
 fun SearchBarPreview(){
@@ -112,5 +197,33 @@ fun CardPreview(){
             R.string.card_text,
             modifier = Modifier.padding(8.dp)
         )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun FavoriteCollectionCardPreview(){
+    ComposeBasicLayoutTheme {
+        FavoriteCollectionCard(
+            R.drawable.model10,
+            R.string.card_collection,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun ScrollableRowPreview(){
+    ComposeBasicLayoutTheme {
+        ScrollableRow(Modifier.padding(8.dp))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun FavoriteCollectionGridPreview(){
+    ComposeBasicLayoutTheme {
+        FavoriteCollectionGrid(Modifier.padding(8.dp))
     }
 }
