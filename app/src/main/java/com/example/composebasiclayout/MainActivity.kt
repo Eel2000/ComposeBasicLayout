@@ -12,9 +12,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,11 +47,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainApplication(){
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        //call composable here
+    Scaffold(
+        bottomBar = { BottomNavBar(modifier = Modifier.padding())}
+    ) { padding ->
+        HomeScreen(modifier = Modifier.padding())
     }
 }
 
@@ -183,7 +186,7 @@ fun FavoriteCollectionGrid(
         contentPadding = PaddingValues(horizontal =  16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.height(150.dp)
+        modifier = modifier.height(120.dp)
     ){
         items(favoriteCollection){item ->
             FavoriteCollectionCard(
@@ -210,6 +213,50 @@ fun HomeSection(
                 .padding(horizontal = 16.dp)
         )
         content()
+    }
+}
+
+@Composable
+fun HomeScreen(modifier: Modifier){
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        Spacer(modifier = Modifier.padding(16.dp))
+        SearchBar(modifier = Modifier.padding(16.dp))
+        HomeSection(title = R.string.home_section_title, modifier = Modifier.padding()){
+            ScrollableRow(modifier = Modifier.padding())
+        }
+        HomeSection(R.string.home_section_fave,Modifier.padding()){
+            FavoriteCollectionGrid(modifier = Modifier.padding())
+        }
+        Spacer(modifier = Modifier.padding(16.dp))
+    }
+}
+
+@Composable
+private fun BottomNavBar(modifier: Modifier){
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.background,
+        modifier = modifier
+    ) {
+        BottomNavigationItem(
+            selected = true,
+            onClick = { /*TODO*/ },
+            icon = {
+                Icon(Icons.Default.Home, contentDescription = null)
+            },
+            label = {
+                Text(stringResource(id = R.string.home_nav_item_home))
+            }
+        )
+        BottomNavigationItem(
+            selected = false,
+            onClick = { /*TODO*/ },
+            icon = {
+                Icon(Icons.Default.AccountCircle, contentDescription = null)
+            },
+            label = {
+                Text(stringResource(id = R.string.home_nav_item_profile))
+            }
+        )
     }
 }
 
@@ -269,5 +316,29 @@ fun HomeSection(){
         HomeSection(title = R.string.home_section_title, Modifier.padding()){
             ScrollableRow(Modifier.padding(8.dp))
         }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun HomeScreenPreview(){
+    ComposeBasicLayoutTheme {
+        HomeScreen(modifier = Modifier.padding())
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun BottomNaBarPreview(){
+    ComposeBasicLayoutTheme {
+        BottomNavBar(modifier = Modifier.padding())
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun ApplicationPreview(){
+    ComposeBasicLayoutTheme {
+        MainApplication()
     }
 }

@@ -10,4 +10,7 @@
     <string name="ow_yeah">Ow yeah</string>
     <string name="cool">Cool</string>
     <string name="home_section_title">Services &amp; Products</string>
+    <string name="home_section_fave">Favorites</string>
+    <string name="home_nav_item_home">Home</string>
+    <string name="home_nav_item_profile">Profile</string>
 </resources>
